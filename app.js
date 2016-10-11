@@ -10,6 +10,20 @@ var users = require('./routes/users');
 
 var app = express();
 
+//mongoose
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('connection to test database established');
+});
+
+//models
+var User = require('./models/User');
+var Picture = require('./models/Picture');
+var Gallery = require('./models/Gallery');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
