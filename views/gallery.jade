@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	div(class='row')		
+		for picture in pictures
+			div(class='col-md-4')
+				div(class='well')
+					img(src='/uploads/#{picture.url}', class='gallery-pic')
+					div(class="clearfix")
+					dl(class="row")
+						dt(class="col-sm-3").
+							Title
+						dd(class="col-sm-9").
+							#{picture.title}
+						dt(class="col-sm-3").
+							Gallery
+						dd(class="col-sm-9").
+							#{picture.gallery}
+						dt(class="col-sm-3").
+							Owner
+						dd(class="col-sm-9").
+							#{picture.owner}
+					a(href='/pictures/edit?id=#{picture._id}', class='btn btn-primary').
+						Edit
