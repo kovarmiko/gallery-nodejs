@@ -10,3 +10,11 @@ a {
 img.gallery-pic{
 	max-width: 100%;
 }
+
+.align-right{
+	text-align: right;
+}
+
+dl {
+    margin-top: 20px;
+}

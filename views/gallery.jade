@@ -11,7 +11,7 @@ block content
 						dt(class="col-sm-3").
 							Title
 						dd(class="col-sm-9").
-							#{picture.title}
+							#{picture.title.length > 40 ? picture.title.substring(0, 37) + '...' : picture.title}
 						dt(class="col-sm-3").
 							Gallery
 						dd(class="col-sm-9").
