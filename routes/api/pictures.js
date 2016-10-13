@@ -56,8 +56,8 @@ router.get('/allPics', (req,res,next) => {
 	});
 });
 
-router.get('/edit', (req,res,next) => {
-	let id = req.query.id;
+router.get('/edit/:id', (req,res,next) => {
+	let id = req.params.id;
 	
 	
 	crudOps.picture.findById(id, (err, picture) =>{
@@ -73,12 +73,23 @@ router.get('/edit', (req,res,next) => {
 });
 
 router.post('/edit', (req,res,next) => {
-//@todo: body of this form: 
-//this will edit metadata only
-//@todo: separate form handler for picture changes: 
-//this is because enctype="multipart/form-data" is not supported by bodyParser middleware
-	
-	res.send('posted');
+	console.dir(req.body);
+	crudOps.picture.update(req.body.id, req.body, ()=> res.redirect('edit/' + req.body.id))
+});
+
+router.post('/changePic', (req,res,next) => {
+	upload(req,res,function(err) {
+        if(err) {
+        	console.dir(err);
+            return res.render('uploader', {message : "Upload failed!"});
+        }
+        const update = {
+        	id: req.body.id,
+        	url: req.file.filename
+        }
+
+        crudOps.picture.update(update.id, update, ()=> res.redirect('edit/' + req.body.id));
+    });
 });
 
 module.exports = router;

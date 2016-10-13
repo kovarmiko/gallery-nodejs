@@ -17,6 +17,9 @@ module.exports = {
 		},
 		findById :(id, clb) => {
 			Picture.findOne( {'_id' : id }, clb);
+		},
+		update : (id, data, clb) => {
+				Picture.findOneAndUpdate({'_id' : id}, data, {} , clb);
 		}
 	}
 };

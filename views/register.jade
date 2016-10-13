@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  .wrapper
+    form.form-signin(action='/register', method='post', name='registerForm')
+      h3.form-signin-heading Register Form
+      hr.colorgraph
+      br
+      input.form-control(type='text', name='Username', placeholder='Username', required='', autofocus='')
+      input.form-control(type='password', name='Password', placeholder='Password', required='')
+      button.btn.btn-lg.btn-primary.btn-block(name='Submit', value='Login', type='Submit') Register
