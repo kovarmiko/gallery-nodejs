@@ -4,18 +4,20 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var config = require('./config/config')
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./routes/api/users');
 var login = require('./routes/login');
 var register = require('./routes/register');
 var pictures = require('./routes/api/pictures');
+var utils = require('./utils');
 
 var app = express();
 
 //mongoose
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect(config.database);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -40,8 +42,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/pictures', pictures);
+app.use('/api', utils.loginMiddleware);
+app.use('/api/users', users);
+app.use('/api/pictures', pictures);
 app.use('/login', login);
 app.use('/register', register);
 

@@ -11,7 +11,7 @@ block content
 		div.col-md-6
 			div.well
 				h4 Change Picture Data:
-				form#updatePictureData(name='updatePictureData' enctype='', action='/pictures/edit', method='post')
+				form#updatePictureData(name='updatePictureData' enctype='', action='/api/pictures/update/#{picture._id}', method='post')
 					- var cols = ["title", "owner", "gallery"];
 					for name in cols
 						div(class='form-group')
@@ -27,7 +27,7 @@ block content
 				h4 Change Picture:
 				img.thumbnail(src='/uploads/#{picture.url}', height='100')
 				div.clearfix
-				form#updatePicture(name='updatePicture' enctype='multipart/form-data', action='/pictures/changePic', method='post')
+				form#updatePicture(name='updatePicture' enctype='multipart/form-data', action='/api/pictures/changePic/#{picture._id}', method='post')
 					div(class='form-group')
 						label(for='picture')
 						input(type='file', name='picture', id='picture')

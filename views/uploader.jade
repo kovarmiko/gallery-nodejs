@@ -2,7 +2,7 @@ extends layout
 
 block content
 	h1= message
-	form#uploadForm(enctype='multipart/form-data', action='/pictures/create', method='post')
+	form#uploadForm(enctype='multipart/form-data', action='/api/pictures/create', method='post')
 		- var cols = ["title", "owner", "gallery"];
 		for name in cols
 			div(class='form-group')

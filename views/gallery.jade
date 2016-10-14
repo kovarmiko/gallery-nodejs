@@ -1,7 +1,8 @@
 extends layout
 
 block content
-	div(class='row')		
+	div(class='row')
+		h1.col-md-12 Pictures		
 		for picture in pictures
 			div(class='col-md-4')
 				div(class='well')
@@ -20,5 +21,5 @@ block content
 							Owner
 						dd(class="col-sm-9").
 							#{picture.owner}
-					a(href='/pictures/edit/#{picture._id}', class='btn btn-primary').
+					a(href='/api/pictures/update/#{picture._id}', class='btn btn-primary').
 						Edit

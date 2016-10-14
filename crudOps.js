@@ -1,5 +1,6 @@
 'use strict';
 var Picture = require('./models/Picture');
+var User = require('./models/User');
 module.exports = {
 	picture : {
 		create : (title, gallery, owner, url, uploaded, clb) => {
@@ -10,7 +11,7 @@ module.exports = {
 				url,
 				uploaded
 			}).save(clb);
-			return picture;
+
 		},
 		all : (clb) => {
 			Picture.find(clb)
@@ -20,6 +21,26 @@ module.exports = {
 		},
 		update : (id, data, clb) => {
 				Picture.findOneAndUpdate({'_id' : id}, data, {} , clb);
+		}
+	},
+	user : {
+		create: (username, password, clb)=>{
+			let user = new User({
+				username,
+				password
+			}).save(clb);
+		},
+		all : (clb) => {
+			User.find(clb)
+		},
+		findById :(id, clb) => {
+			User.findOne( { '_id' : id }, clb);
+		},
+		findByUsername :(id, clb) => {
+			User.findOne( {'username' : id }, clb);
+		},
+		update : (id, data, clb) => {
+				User.findOneAndUpdate({'_id' : id}, data, {} , clb);
 		}
 	}
 };
