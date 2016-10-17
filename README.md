@@ -6,6 +6,8 @@ This project intends to show how to build a simple image uploading server with N
 
 To start, please clone this repo.
 
+In the `/public` directory create a folder named `uploads`.
+
 Inside `/config` directory, copy `default.config.js` to  `./config.js` with:
 
 ```sh
