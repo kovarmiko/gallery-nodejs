@@ -4,11 +4,30 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var config = require('./config/config')
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./routes/api/users');
+var login = require('./routes/login');
+var register = require('./routes/register');
+var pictures = require('./routes/api/pictures');
+var utils = require('./utils');
 
 var app = express();
+
+//mongoose
+var mongoose = require('mongoose');
+mongoose.connect(config.database);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('connection to test database established');
+});
+
+//models
+var User = require('./models/User');
+var Picture = require('./models/Picture');
+var Gallery = require('./models/Gallery');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,7 +42,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api', utils.loginMiddleware);
+app.use('/api/users', users);
+app.use('/api/pictures', pictures);
+app.use('/login', login);
+app.use('/register', register);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

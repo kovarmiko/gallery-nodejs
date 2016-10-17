@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	h1= message
+	form#uploadForm(enctype='multipart/form-data', action='/api/pictures/create', method='post')
+		- var cols = ["title", "owner", "gallery"];
+		for name in cols
+			div(class='form-group')
+				label(for='#{name}').
+					#{name}
+				input(type='text', name='#{name}', id='#{name}', class='form-control', placeholder='Enter #{name}')
+		
+		div(class='form-group')
+			label(for='picture')
+			input(type='file', name='picture', id='picture')
+			
+			p(class='help-block').
+				Please choose file and hit upload
+		input(type='submit', value='Submit', name='submit' class='btn btn-primary')

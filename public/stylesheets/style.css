@@ -6,3 +6,19 @@ body {
 a {
   color: #00B7FF;
 }
+
+img.gallery-pic{
+	max-width: 100%;
+}
+
+.align-right{
+	text-align: right;
+}
+
+dl {
+    margin-top: 20px;
+}
+
+a:hover{
+	cursor: pointer;
+}

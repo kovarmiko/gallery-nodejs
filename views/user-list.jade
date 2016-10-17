@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	h1 Users
+	table.table.table-striped
+		thead
+			tr
+				th Username
+				th Id
+		tbody
+			each user in users
+				tr
+					td. 
+						#{user.username}
+					td.
+						#{user._id}
