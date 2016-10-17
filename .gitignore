@@ -1,4 +1,5 @@
 node_modules/
-uploads/
+public/uploads/*
 config/config.js
 config/
+*.log
