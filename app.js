@@ -41,11 +41,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function(req, res, next) {
+app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authentication");
   next();
 });
+
+app.options('*', function(req, res, next){
+  res.status(200).send();
+});
+
 app.use('/', routes);
 app.use('/api', utils.loginMiddleware);
 app.use('/api/users', users);
