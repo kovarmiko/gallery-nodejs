@@ -5,7 +5,7 @@ var crudOps = require('./crudOps');
 var utils = {
     loginMiddleware: function (req, res, next) {
         // check header or url parameters or post parameters for token
-        var token = req.cookies.token || false;
+        var token = req.cookies.token || req.body.token || req.get('Authentication') || false;
         // decode token
         if (token) {
             // verifies secret and checks exp
