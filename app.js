@@ -41,9 +41,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authentication");
+// Additional middleware which will set headers that we need on each request.
+app.use(function(req, res, next) {
+  // Set permissive CORS header - this allows this server to be used only as
+  // an API server in conjunction with something else
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authentication");
+
+  // Disable caching so we'll always get the latest comments.
+  res.setHeader("Cache-Control", "no-cache");
   next();
 });
 
@@ -57,6 +63,8 @@ app.use('/api/users', users);
 app.use('/api/pictures', pictures);
 app.use('/login', login);
 app.use('/register', register);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
