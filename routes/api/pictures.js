@@ -23,7 +23,7 @@ router.get('/create', function(req, res, next) {
 router.post('/create', function(req, res, next) {
 
 	upload(req,res,function(err) {
-        if(err) {
+        if (err) {
         	console.dir(err);
             return res.render('uploader', {message : "Upload failed!"});
         }
@@ -36,8 +36,8 @@ router.post('/create', function(req, res, next) {
         let uploaded = Date.now();
         
         //create picture
-        crudOps.picture.create(title, gallery, owner, url, uploaded, (err, picture) =>{
-        	if(err){
+        crudOps.picture.create(title, gallery, owner, url, uploaded, (err, picture) => {
+        	if (err){ 
 				console.log(err);
 				res.status(500);
 				res.send('server encountered an unexpected error');
@@ -45,7 +45,7 @@ router.post('/create', function(req, res, next) {
         	}
         	console.dir(picture);
         	
-        	if(req.query.json){
+        	if (req.query.json){
         		return res.json({picture});
         	}
         	res.render('uploader', {message: "Upload Successfull!"});	
@@ -55,15 +55,15 @@ router.post('/create', function(req, res, next) {
 });
 
 router.get('/all', (req,res,next) => {
-	crudOps.picture.all((err, pictures) =>{
-		if(err){
+	crudOps.picture.all((err, pictures) => {
+		if (err){
 			console.log(err);
 			res.status(500);
 			res.send('server encountered an unexpected error');
 			return;	
 		}
 
-		if(req.query.json){
+		if (req.query.json){
 			return res.json({pictures})
 		}
 		res.render('gallery', {pictures});
@@ -74,42 +74,42 @@ router.get('/update/:id', (req,res,next) => {
 	let id = req.params.id;
 	
 	
-	crudOps.picture.findById(id, (err, picture) =>{
-		if(err){
+	crudOps.picture.findById(id, (err, picture) => {
+		if (err){
 			console.log(err);
 			res.status(500);
 			res.send('server encountered an unexpected error');
 			return;	
 		}
 
-		if(req.query.json){
+		if (req.query.json){
 			return res.json({pictures})
 		}
-		//console.dir(picture);
 		res.render('edit-picture', {picture});
 	});
 });
 
 router.post('/update/:id', (req,res,next) => {
 	console.dir(req.body);
-	crudOps.picture.update(req.params.id, req.body, (err, picture)=> {
-		if(err){
+	crudOps.picture.update(req.params.id, req.body, (err, picture) => {
+		if (err){
 			console.log(err);
 			res.status(500);
 			res.send('server encountered an unexpected error');
 			return;	
 		}
-		if(req.query.json){
+		if (req.query.json){
 			return res.json({picture});
 
 		}
 
-		res.redirect('/api/pictures/update/' + req.body.id)})
+		res.redirect('/api/pictures/update/' + req.body.id)
+	});
 });
 
 router.post('/changePic/:id', (req,res,next) => {
 	upload(req,res,function(err) {
-        if(err) {
+        if (err) {
         	console.dir(err);
             return res.render('uploader', {message : "Upload failed!"});
         }
@@ -118,14 +118,14 @@ router.post('/changePic/:id', (req,res,next) => {
         	url: req.file.filename
         }
 
-        crudOps.picture.update(update.id, update, (err, picture)=>{
-	        if(err){
+        crudOps.picture.update(update.id, update, (err, picture) => {
+	        if (err){
 				console.log(err);
 				res.status(500);
 				res.send('server encountered an unexpected error');
 				return;	
 			}
-			if(req.query.json){
+			if (req.query.json){
 				return res.json({pictures})
 			}
         	res.redirect('/api/pictures/update/' + req.body.id)
