@@ -53,18 +53,12 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.options('*', function(req, res, next){
-  res.status(200).send();
-});
-
 app.use('/', routes);
 app.use('/api', utils.loginMiddleware);
 app.use('/api/users', users);
 app.use('/api/pictures', pictures);
 app.use('/login', login);
 app.use('/register', register);
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -96,6 +90,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
