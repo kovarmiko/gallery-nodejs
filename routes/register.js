@@ -7,19 +7,26 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-	crudOps.user.create(req.body.username, req.body.password, (err, user)=>{
-		if(err){
-			res.status(500);
-			res.json({error: "Internal Server Error"});
-		}
-		if(req.query.json){
-			res.json(user);
-			return;
-		}
-		res.render('register', {message: 'User created!'});
+	crudOps.user.findByUsername(req.body.username, (err, user) =>{
+		if (user){
+			return res.json({
+				success: false,
+				message: 'user with this username already exists'
+			});
+		} else {
+			crudOps.user.create(req.body.username, req.body.password,(err, user)=>{
+            if (err){
+                res.status(500);
+                res.json({error: "Internal Server Error"});
+            }
+            if (req.query.json){
+                res.json(user);
+            }
+            
+            res.render('register', {});
+        });	
+		} 	
 	})
-
-	res.render('register', {});
 });
 
 module.exports = router;

@@ -3,7 +3,7 @@ var jwt = require('jsonwebtoken');
 var crudOps = require('./crudOps');
 
 var utils = {
-    loginMiddleware: function (req, res, next) {
+    loginMiddleware(req, res, next) {
         // check header or url parameters or post parameters for token
         var token = req.cookies.token || req.body.token || req.get('Authentication') || false;
         // decode token
@@ -36,14 +36,13 @@ var utils = {
             res.redirect('/login');
         }
     },
-    assignUserObject: function (userName, req, callback) {
-
+    assignUserObject(userName, req, callback) {
         crudOps.user.findByUsername(userName, (err, person)=>{
         	req.userInfo = person;
         	callback();
         });
-
-    },
+    }
 };
+
 
 module.exports = utils;
