@@ -45,11 +45,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
   // Set permissive CORS header - this allows this server to be used only as
   // an API server in conjunction with something else
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authentication");
 
   // Disable caching so we'll always get the latest comments.
-  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader("Cache-Control", "no-cache");
   next();
+});
+
+app.options('*', function(req, res, next){
+  res.status(200).send();
 });
 
 app.use('/', routes);
