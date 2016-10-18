@@ -15,8 +15,6 @@ var utils = {
                 } else {
                     // if everything is good, save to request for use in other routes
                     req.decoded = decoded;
-                    console.log('decoded');
-                    console.log(decoded);
 
                     //add user info object for access checks in subsequent routes
                     utils.assignUserObject(decoded, req, () => next());
@@ -24,15 +22,18 @@ var utils = {
                 }
             });
 
-        } else {
+        } else { //no token has been supplied
+            
+            //check if request wants json
+            if(req.query.json){
+                return res.status(403).send({
+                    success: false,
+                    message: 'No token provided.'
+                });
+            }
 
-            // if there is no token
-            // return an error
-            return res.status(403).send({
-                success: false,
-                message: 'No token provided.'
-            });
-
+            //if code gotten here it wants standard UI, redirect to login page
+            res.redirect('/login');
         }
     },
     assignUserObject: function (userName, req, callback) {
