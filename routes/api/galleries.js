@@ -43,7 +43,7 @@ router.post('/create', function(req, res, next) {
 router.get('/one/:id', (req,res,next) => {
 	let id = req.params.id;
 
-	crudOps.model.read(Model, id, (err, picture) => {
+	crudOps.model.read(Model, id, (err, gallery) => {
 		if (err){
 			console.log(err);
 			res.status(500);
@@ -52,9 +52,9 @@ router.get('/one/:id', (req,res,next) => {
 		}
 
 		if (req.query.json){
-			return res.json({pictures});
+			return res.json({gallery});
 		}
-		res.render('edit-picture', {picture});
+		res.render('edit-picture', {gallery});
 	} );
 });
 
