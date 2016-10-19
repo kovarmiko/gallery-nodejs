@@ -6,7 +6,7 @@
 // Read(one):  GET   /api/pictures/one/:id?json = true
 // Read(All):  GET:  /api/pictures/all?json=true
 // Update:     POST: /api/pictures/update/:id?json=true 
-// Delete:     POST: /api/pictures/delete/:id?json=true
+// Delete:     DELETE: /api/pictures/delete/:id?json=true
 
 var express = require('express');
 var router = express.Router();

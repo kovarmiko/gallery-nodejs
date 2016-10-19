@@ -61,7 +61,7 @@ router.get('/one/:id', (req,res,next) => {
 /* ALL */
 router.get('/all', (req,res,next) => {
 	
-	crudOps.model.all(Model, (err, pictures) => {
+	crudOps.model.all(Model, (err, galleries) => {
 		if (err){
 			console.log(err);
 			res.status(500);
@@ -70,9 +70,9 @@ router.get('/all', (req,res,next) => {
 		}
 
 		if (req.query.json){
-			return res.json({pictures});
+			return res.json({galleries});
 		}
-		res.render('gallery', {pictures});
+		res.render('gallery', {galleries});
 	});
 });
 
