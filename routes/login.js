@@ -16,8 +16,9 @@ router.post('/', function(req, res, next) {
   	username: req.body.username,
   	password : req.body.password
   }
+  console.dir(credentials);
 
-  crudOps.user.findByUsername(credentials.username, (err, user) =>{
+  crudOps.model.readByCondition('User', {'username' : credentials.username}, (err, user) => {
   	
   	if (err) throw err;
   	
@@ -37,18 +38,16 @@ router.post('/', function(req, res, next) {
 
     res.cookie('token', token, { maxAge: 100*60*60*24, httpOnly: false });
     
-    if (req.query.json){
-    	res.json({
+    if (req.query.json) {
+      res.json({
         success: true,
         message: 'Enjoy your token!',
-        token: token
-    	
+        token: token    	
     	});
     	return;
     }
     
-    res.render('login', {});
-  
+    res.render('login', {}); 
 	});
 });
 

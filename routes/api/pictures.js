@@ -1,7 +1,17 @@
 'use strict';
+
+//API:
+//
+// Create:     POST: /api/pictures/create?json=true
+// Read(one):  GET   /api/pictures/one/:id?json = true
+// Read(All):  GET:  /api/pictures/all?json=true
+// Update:     POST: /api/pictures/update/:id?json=true 
+// Delete:     POST: /api/pictures/delete/:id?json=true
+
 var express = require('express');
 var router = express.Router();
 var crudOps = require('../../crudOps');
+var Model = 'Picture';
 
 var multer = require('multer');
 var storage =   multer.diskStorage({
@@ -14,12 +24,7 @@ var storage =   multer.diskStorage({
 });
 var upload = multer({ storage: storage }).single('picture');
 
-/* Send Upload Form */
-router.get('/create', function(req, res, next) {
-  res.render('uploader', {message : "Picture Form"});
-});
-
-/* Process uploded Picture */
+/* CREATE */
 router.post('/create', function(req, res, next) {
 
 	upload(req,res,function(err) {
@@ -34,9 +39,10 @@ router.post('/create', function(req, res, next) {
 		let owner  = req.body.owner;
         let url = req.file.filename;
         let uploaded = Date.now();
-        
-        //create picture
-        crudOps.picture.create(title, gallery, owner, url, uploaded, (err, picture) => {
+
+        let data = {title, gallery, owner, url, uploaded};
+
+        crudOps.model.create(Model, data, (err, picture) => {
         	if (err){ 
 				console.log(err);
 				res.status(500);
@@ -50,12 +56,31 @@ router.post('/create', function(req, res, next) {
         	}
         	res.render('uploader', {message: "Upload Successfull!"});	
         });
-
     });
 });
 
+/* ONE */
+router.get('/one/:id', (req,res,next) => {
+	let id = req.params.id;
+	
+	crudOps.model.read(Model, id, (err, picture) => {
+		if (err){
+			console.log(err);
+			res.status(500);
+			res.send('server encountered an unexpected error');
+			return;	
+		}
+
+		if (req.query.json){
+			return res.json({pictures})
+		}
+		res.render('edit-picture', {picture});
+	} );
+});
+
+/* ALL */ 
 router.get('/all', (req,res,next) => {
-	crudOps.picture.all((err, pictures) => {
+	crudOps.model.all(Model, (err, pictures) => {
 		if (err){
 			console.log(err);
 			res.status(500);
@@ -70,28 +95,12 @@ router.get('/all', (req,res,next) => {
 	});
 });
 
-router.get('/update/:id', (req,res,next) => {
-	let id = req.params.id;
-	
-	
-	crudOps.picture.findById(id, (err, picture) => {
-		if (err){
-			console.log(err);
-			res.status(500);
-			res.send('server encountered an unexpected error');
-			return;	
-		}
-
-		if (req.query.json){
-			return res.json({pictures})
-		}
-		res.render('edit-picture', {picture});
-	});
-});
-
+/* UPDATE */
 router.post('/update/:id', (req,res,next) => {
 	console.dir(req.body);
-	crudOps.picture.update(req.params.id, req.body, (err, picture) => {
+	let id = req.params.id;
+
+	crudOps.model.update(Model, id, req.body, (err, picture) => {
 		if (err){
 			console.log(err);
 			res.status(500);
@@ -107,6 +116,27 @@ router.post('/update/:id', (req,res,next) => {
 	});
 });
 
+/* DELETE */
+router.delete('/delete/:id',(req,res,next) => {
+	let id = req.params.id;
+	crudOps.model.delete(Model, id,(error, doc, result) => {
+		if (error) {
+			console.log(`Logging deletion error of id: ${id}`);
+			console.dir(error);
+			res.status(500);
+			res.send('server encountered an unexpected error');
+			return;
+		}
+
+		if (req.query.json) {
+			res.json({success: true, message: `${Model} with id:${id} was successfully deleted`});
+			return;
+		}
+		res.redirect('/');
+	})
+});
+
+/* SPECIAL ROUTE FOR CHANING PICTURE IN THE PICTURE ENTITY */
 router.post('/changePic/:id', (req,res,next) => {
 	upload(req,res,function(err) {
         if (err) {
@@ -117,8 +147,7 @@ router.post('/changePic/:id', (req,res,next) => {
         	id: req.params.id,
         	url: req.file.filename
         }
-
-        crudOps.picture.update(update.id, update, (err, picture) => {
+        crudOps.model.update(Model, update.id, update, (err, picture) => {
 	        if (err){
 				console.log(err);
 				res.status(500);
@@ -131,5 +160,32 @@ router.post('/changePic/:id', (req,res,next) => {
         	res.redirect('/api/pictures/update/' + req.body.id)
         });
     });
+});
+
+/* THE FOLLOWING ROUTES ARE HELPERS FOR BUILT-IN UI */
+
+/*Send Picture Upload Form with data from the edited Picture entity*/
+router.get('/update/:id', (req,res,next) => {
+	let id = req.params.id;
+	
+	crudOps.model.read(Model, id, (err, picture) => {
+		if (err){
+			console.log(err);
+			res.status(500);
+			res.send('server encountered an unexpected error');
+			return;	
+		}
+
+		if (req.query.json){
+			return res.json({pictures})
+		}
+		res.render('edit-picture', {picture});
+	} );
+});
+
+
+/* Send Picture Upload Form */
+router.get('/create', function(req, res, next) {
+  res.render('uploader', {message : "Picture Form"});
 });
 module.exports = router;

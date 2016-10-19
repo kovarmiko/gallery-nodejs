@@ -37,7 +37,7 @@ var utils = {
         }
     },
     assignUserObject(userName, req, callback) {
-        crudOps.user.findByUsername(userName, (err, person)=>{
+        crudOps.model.readByCondition('User', {'username' : userName}, (err, person) => {
         	req.userInfo = person;
         	callback();
         });

@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var crudOps = require('../../crudOps');
-
+var Model = 'User';
 router.get('/all', function(req, res, next) {
-	crudOps.user.all((err, users)=>{
+	crudOps.model.all(Model, (err, users)=>{
 		if(err){
 			res.status(500);
 			res.json({error: "Internal Server Error"});

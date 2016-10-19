@@ -1,46 +1,28 @@
 'use strict';
 var Picture = require('./models/Picture');
 var User = require('./models/User');
+var Gallery = require('./models/Gallery');
+var Models = {Picture, User, Gallery};
 module.exports = {
-	picture : {
-		create : (title, gallery, owner, url, uploaded, clb) => {
-			let picture = new Picture({
-				title,
-				gallery,
-				owner,
-				url,
-				uploaded
-			}).save(clb);
-
+	model : {
+		create: (model, data, clb) => {
+			new Models[model](data).save(clb);
 		},
-		all : (clb) => {
-			Picture.find(clb)
+		read : (model, id, clb) => {
+			Models[model].findOne({'_id' : id }, clb);
 		},
-		findById :(id, clb) => {
-			Picture.findOne( {'_id' : id }, clb);
+		readByCondition : (model, condition, clb) => {
+			Models[model].findOne(condition, clb);
 		},
-		update : (id, data, clb) => {
-				Picture.findOneAndUpdate({'_id' : id}, data, {} , clb);
-		}
-	},
-	user : {
-		create: (username, password, clb)=>{
-			let user = new User({
-				username,
-				password
-			}).save(clb);
+		update:(model, id, data, clb) => {
+			Models[model].findOneAndUpdate({'_id' : id}, data, {} , clb);
 		},
-		all : (clb) => {
-			User.find(clb)
+		delete : (model, id, clb) => {
+			Models[model].find({ '_id': id }).remove( clb ); //cleb parameters (error, doc, result)
 		},
-		findById :(id, clb) => {
-			User.findOne( { '_id' : id }, clb);
+		all : (model, clb) => {
+			Models[model].find(clb)
 		},
-		findByUsername :(id, clb) => {
-			User.findOne( {'username' : id }, clb);
-		},
-		update : (id, data, clb) => {
-				User.findOneAndUpdate({'_id' : id}, data, {} , clb);
-		}
 	}
+
 };

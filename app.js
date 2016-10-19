@@ -12,6 +12,7 @@ var users = require('./routes/api/users');
 var login = require('./routes/login');
 var register = require('./routes/register');
 var pictures = require('./routes/api/pictures');
+var galleries = require('./routes/api/galleries');
 var utils = require('./utils');
 
 var app = express();
@@ -25,10 +26,6 @@ db.once('open', function() {
   console.log('connection to test database established');
 });
 
-//models
-var User = require('./models/User');
-var Picture = require('./models/Picture');
-var Gallery = require('./models/Gallery');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -49,6 +46,7 @@ app.use('/', routes);
 app.use('/api', utils.loginMiddleware);
 app.use('/api/users', users);
 app.use('/api/pictures', pictures);
+app.use('/api/galleries', galleries);
 app.use('/login', login);
 app.use('/register', register);
 
