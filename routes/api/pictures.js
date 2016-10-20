@@ -95,25 +95,24 @@ router.get('/all', (req,res,next) => {
 	});
 });
 
+/*PICTURES FROM ONE GALLERY*/
+
+router.get('/get-collection/:galleryId', (req, res, next) => {
+	let gid = req.params.galleryId;
+	crudOps.model.readAllByCondition(Model,{gallery : gid}, crudOps.apiCallback(req, res, '/'))
+});
+
 /* UPDATE */
 router.post('/update/:id', (req,res,next) => {
 	console.dir(req.body);
 	let id = req.params.id;
 
-	crudOps.model.update(Model, id, req.body, (err, picture) => {
-		if (err){
-			console.log(err);
-			res.status(500);
-			res.send('server encountered an unexpected error');
-			return;	
-		}
-		if (req.query.json){
-			return res.json({picture});
-
-		}
-
-		res.redirect('/api/pictures/update/' + req.body.id)
-	});
+	crudOps.model.update(
+		Model, 
+		id, 
+		req.body, 
+		crudOps.apiCallback(req, res, '/api/pictures/update/' + req.body.id)
+	);
 });
 
 /* DELETE */
@@ -147,18 +146,14 @@ router.post('/changePic/:id', (req,res,next) => {
         	id: req.params.id,
         	url: req.file.filename
         }
-        crudOps.model.update(Model, update.id, update, (err, picture) => {
-	        if (err){
-				console.log(err);
-				res.status(500);
-				res.send('server encountered an unexpected error');
-				return;	
-			}
-			if (req.query.json){
-				return res.json({pictures})
-			}
-        	res.redirect('/api/pictures/update/' + req.body.id)
-        });
+
+
+        crudOps.model.update(
+        	Model,
+        	update.id,
+        	update, 
+        	crudOps.apiCallback( req, res, '/api/pictures/update/' + req.body.id)
+        );
     });
 });
 

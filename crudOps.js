@@ -14,6 +14,9 @@ module.exports = {
 		readByCondition : (model, condition, clb) => {
 			Models[model].findOne(condition, clb);
 		},
+		readAllByCondition : (model, condition, clb) => {
+			Models[model].find(condition, clb);
+		},
 		update:(model, id, data, clb) => {
 			Models[model].findOneAndUpdate({'_id' : id}, data, {} , clb);
 		},
@@ -23,6 +26,22 @@ module.exports = {
 		all : (model, clb) => {
 			Models[model].find(clb)
 		},
-	}
+	},
+	apiCallback: (req, res, redirect) => {
+		return (err, model) => {
+			if (err){
+			console.log(err);
+			res.status(500);
+			res.send('server encountered an unexpected error');
+			return;	
+			}
+			if (req.query.json){
+				return res.json({model});
 
+			}
+			if (redirect){
+				res.redirect(redirect);
+			}
+		}		
+	}
 };
