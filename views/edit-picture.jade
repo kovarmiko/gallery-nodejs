@@ -8,31 +8,24 @@ block content
 			h1.
 				Edit #{picture.title}
 	div(class='row')
-		div.col-md-6
+		div.col-md-12
 			div.well
 				h4 Change Picture Data:
-				form#updatePictureData(name='updatePictureData' enctype='', action='/api/pictures/update/#{picture._id}', method='post')
+				form#updatePictureData(name='updatePictureData' enctype='multipart/form-data', action='/api/pictures/update/#{picture._id}', method='post')
 					- var cols = ["title", "owner", "gallery"];
 					for name in cols
 						div(class='form-group')
 							label(for='#{name}').
 								#{name}
 							input(type='text', name='#{name}', id='#{name}', value='#{picture[name.toLowerCase()]}' class='form-control', placeholder='Enter #{name}')
-					
-
-					input(type='hidden' name='id' value='#{picture._id}')
-					input(type='submit', value='Submit', name='submit' class='btn btn-primary')
-		div.col-md-6
-			div.well
-				h4 Change Picture:
-				img.thumbnail(src='/uploads/#{picture.url}', height='100')
-				div.clearfix
-				form#updatePicture(name='updatePicture' enctype='multipart/form-data', action='/api/pictures/changePic/#{picture._id}', method='post')
-					div(class='form-group')
+					div.form-group
+						h4 Change Picture:
+						img.thumbnail(src='/uploads/#{picture.url}', height='100')
+						div.clearfix
 						label(for='picture')
 						input(type='file', name='picture', id='picture')
-						
 						p(class='help-block').
 							Please choose file and hit upload to change the picture
-						input(type='hidden' name='id' value='#{picture._id}')
-						input(type='submit', value='Upload', name='submit' class='btn btn-primary')
+					input(type='hidden' name='id' value='#{picture._id}')
+
+					input(type='submit', value='Submit', name='submit' class='btn btn-primary')

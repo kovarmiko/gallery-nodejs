@@ -19,7 +19,7 @@ var storage =   multer.diskStorage({
     callback(null, './public/uploads');
   },
   filename: function (req, file, callback) {
-    callback(null, file.originalname);
+    callback(null, Date.now() + '-' + file.originalname);
   }
 });
 var upload = multer({ storage: storage }).single('picture');
@@ -104,15 +104,26 @@ router.get('/get-collection/:galleryId', (req, res, next) => {
 
 /* UPDATE */
 router.post('/update/:id', (req,res,next) => {
-	console.dir(req.body);
-	let id = req.params.id;
 
-	crudOps.model.update(
-		Model, 
-		id, 
-		req.body, 
-		crudOps.apiCallback(req, res, '/api/pictures/update/' + req.body.id)
-	);
+	upload(req, res,(err) => {
+		if (err){
+			console.log('Loggin file upload error')
+			console.dir(err);	
+		}
+
+		if(req.file.filename){
+			req.body.url = req.file.filename;
+		} 
+
+		console.dir(req.body);
+		let id = req.params.id;
+		crudOps.model.update(
+			Model, 
+			id, 
+			req.body, 
+			crudOps.apiCallback(req, res, '/api/pictures/update/' + req.body.id)
+		);
+	});	
 });
 
 /* DELETE */
@@ -146,7 +157,6 @@ router.post('/changePic/:id', (req,res,next) => {
         	id: req.params.id,
         	url: req.file.filename
         }
-
 
         crudOps.model.update(
         	Model,

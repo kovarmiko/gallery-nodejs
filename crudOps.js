@@ -18,7 +18,7 @@ module.exports = {
 			Models[model].find(condition, clb);
 		},
 		update:(model, id, data, clb) => {
-			Models[model].findOneAndUpdate({'_id' : id}, data, {} , clb);
+			Models[model].findOneAndUpdate({'_id' : id}, data, {new: true} , clb);
 		},
 		delete : (model, id, clb) => {
 			Models[model].find({ '_id': id }).remove( clb ); //cleb parameters (error, doc, result)
