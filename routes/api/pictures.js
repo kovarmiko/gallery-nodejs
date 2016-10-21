@@ -111,7 +111,7 @@ router.post('/update/:id', (req,res,next) => {
 			console.dir(err);	
 		}
 
-		if(req.file.filename){
+		if(req.file && req.file.filename){
 			req.body.url = req.file.filename;
 		} 
 
