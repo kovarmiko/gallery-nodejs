@@ -44,6 +44,7 @@ router.get('/one/:id', (req,res,next) => {
 	let id = req.params.id;
 
 	crudOps.model.read(Model, id, (err, gallery) => {
+		
 		if (err){
 			console.log(err);
 			res.status(500);
@@ -62,16 +63,18 @@ router.get('/one/:id', (req,res,next) => {
 router.get('/all', (req,res,next) => {
 	
 	crudOps.model.all(Model, (err, galleries) => {
+		
 		if (err){
 			console.log(err);
 			res.status(500);
 			res.send('server encountered an unexpected error');
 			return;	
 		}
-
+		
 		if (req.query.json){
 			return res.json({galleries});
 		}
+
 		res.render('gallery', {galleries});
 	});
 });
@@ -81,15 +84,16 @@ router.post('/update/:id', (req,res,next) => {
 	let id = req.params.id;
 
 	crudOps.model.update(Model, id, req.body, (err, picture) => {
+		
 		if (err){
 			console.log(err);
 			res.status(500);
 			res.send('server encountered an unexpected error');
 			return;	
 		}
+
 		if (req.query.json){
 			return res.json({picture});
-
 		}
 
 		res.redirect('/');
@@ -100,6 +104,7 @@ router.post('/update/:id', (req,res,next) => {
 router.delete('/delete/:id',(req,res,next) => {
 	let id = req.params.id;
 	crudOps.model.delete(Model, id,(error, doc, result) => {
+		
 		if (error) {
 			console.log(`Logging deletion error of id: ${id}`);
 			console.dir(error);
@@ -112,6 +117,7 @@ router.delete('/delete/:id',(req,res,next) => {
 			res.json({success: true, message: `${Model} with id:${id} was successfully deleted`});
 			return;
 		}
+		
 		res.redirect('/');
 	})
 });

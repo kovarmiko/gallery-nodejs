@@ -182,7 +182,7 @@ router.get('/update/:id', (req,res,next) => {
 		}
 
 		if (req.query.json){
-			return res.json({pictures})
+			return res.json({picture})
 		}
 		res.render('edit-picture', {picture});
 	} );
