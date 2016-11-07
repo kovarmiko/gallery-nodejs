@@ -3,3 +3,4 @@ public/uploads/*
 config/config.js
 config/
 *.log
+/*.zip
