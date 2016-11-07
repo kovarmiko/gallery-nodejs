@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 // create a schema
 var gallerSchema = new Schema({
-  title: {type: String, required: true, unique: true },
+  title: {type: String, required: true},
   owner : {type: String, required: true},
   created : {type: String, required: true}
 });
