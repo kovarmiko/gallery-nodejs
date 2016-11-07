@@ -4,11 +4,12 @@ var Schema = mongoose.Schema;
 
 // create a schema
 var pictureSchema = new Schema({
-  title: { type: String, required: true, unique: true },
-  gallery: { type: String, required: true},
-  owner : { type: String, required: true},
-   url : { type: String, required: true},
-   uploaded : { type: String, required: true}
+	/* '_id' parameter is supplied OTB by MongoDb, the unique primary key*/
+	title: { type: String, required: true, unique: true },
+	gallery: { type: String, required: true},
+	owner : { type: String, required: true},
+	url : { type: String, required: true},
+	uploaded : { type: String, required: true}
 });
 
 // the schema is useless so far

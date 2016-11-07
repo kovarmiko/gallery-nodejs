@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 
 // create a schema
 var gallerSchema = new Schema({
+/* '_id' parameter is supplied OTB by MongoDb, the unique primary key*/
   title: {type: String, required: true},
   owner : {type: String, required: true},
   created : {type: String, required: true}

@@ -23,17 +23,17 @@ router.post('/create', function(req, res, next) {
 
         let data = {title, owner, created};
 
-        crudOps.model.create(Model, data, (err, picture) => {
+        crudOps.model.create(Model, data, (err, gallery) => {
         	if (err){ 
 				console.log(err);
 				res.status(500);
 				res.send('server encountered an unexpected error');
 				return;	
         	}
-        	console.dir(picture);
+        	console.dir(gallery);
         	
         	if (req.query.json){
-        		return res.json({picture});
+        		return res.json({gallery});
         	}
         	res.render('uploader', {message: "Upload Successfull!"});	
         });
@@ -55,7 +55,7 @@ router.get('/one/:id', (req,res,next) => {
 		if (req.query.json){
 			return res.json({gallery});
 		}
-		res.render('edit-picture', {gallery});
+		return res.json({gallery});
 	} );
 });
 
@@ -83,7 +83,7 @@ router.get('/all', (req,res,next) => {
 router.post('/update/:id', (req,res,next) => {
 	let id = req.params.id;
 
-	crudOps.model.update(Model, id, req.body, (err, picture) => {
+	crudOps.model.update(Model, id, req.body, (err, gallery) => {
 		
 		if (err){
 			console.log(err);
@@ -93,7 +93,7 @@ router.post('/update/:id', (req,res,next) => {
 		}
 
 		if (req.query.json){
-			return res.json({picture});
+			return res.json({gallery});
 		}
 
 		res.redirect('/');
