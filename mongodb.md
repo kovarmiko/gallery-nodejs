@@ -12,18 +12,19 @@ To create an account visit [this page](https://aws.amazon.com/) and click create
 
 ## Getting an MLAB account
 
-The most convenient way to store data in MongoDB is to create an account with Mlab and and use their free package to obtain a resource path to a MondgoDb instance hosted on their servers.
-To create an account click here. How to do this can be found here.
+The most convenient way to store data in MongoDB is to create an account with Mlab and and use their free package to obtain a resource path to a MondgoDb instance hosted on Mlab servers.
 
-After completing the process,  your a mongoDb URI in a format
+To create an account click [here](https://mlab.com/signup/). "How to do it" can be found [here](http://docs.mlab.com/).
+
+After completing the process,  your should possess a mongoDB URI in a format:
 
 `mongodb://<db_user>@<db_password>ds321456.mlab.com:55626/my_db`
 
-will have to be placed inside `/config/config.json` of the clone repository replacing the default „database“ property. 
+This login credential string needs to be placed inside `/config/config.json` of the cloned repository, replacing the default value „database“ property. 
 
-If you can't find this file just copy
+If you can't find this file just copy:
 
-`/config/default.config.json`  into  `/config/config.json`
+`/config/default.config.json`  into  `/config/config.json`.
 
 ## Preparing application to be uploaded to the AWS
 A convenient way to ship application to AWS is to 'zip' it and upload it to the AWS environment.
