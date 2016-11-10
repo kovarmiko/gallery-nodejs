@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 // create a schema
 var pictureSchema = new Schema({
 	/* '_id' parameter is supplied OTB by MongoDb, the unique primary key*/
-	title: { type: String, required: true, unique: true },
+	title: { type: String, required: true},
 	gallery: { type: String, required: true},
 	owner : { type: String, required: true},
 	url : { type: String, required: true},
