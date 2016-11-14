@@ -19,7 +19,7 @@ module.exports = {
 	},
 
 	readAPI : (config, clb) => {
-		Models[config.model] &&	Models[config.model].findOne(config.condition, clb);
+		Models[config.model] &&	Models[config.model].find(config.condition, clb);
 	},
 
 	deleteAPI : (config, clb) => {
