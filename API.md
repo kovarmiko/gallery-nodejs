@@ -89,7 +89,7 @@ Type write combines `create` and `update` for the simplicity. Update is only tri
 
 * `type`(required): (string) is always `write`
 * `model`(required): (string) is the name of the model ex: `Picture`
-* `data`(required): (object) is your data representation of the Model you wish to insert/update(Please pay close attention to what you put in here beause the server can silently fail if you provide an unfit dataset. Please see the definitions of Models to know what properties you can put here)
+* `condition`(required): (object) is your data representation of the Model you wish to insert/update(Please pay close attention to what you put in here beause the server can silently fail if you provide an unfit dataset. Please see the definitions of Models to know what properties you can put here)
 * `idParam`(optional) : (string) can be `id` or `_id` or anything that specifies what is the unique key. If provided, the API will attempt to perform an update otherwise an insert will be performed.
  
 Example:
