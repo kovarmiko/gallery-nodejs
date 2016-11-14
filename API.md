@@ -1,8 +1,8 @@
 # CRUD API with "Single API"
 
-This document describes the "Single API", the API which supports the most common database operations for all public tables in this project.
+This document describes the "Single API", an API which supports the most common database operations for all public tables in this project.
 
-The public tables, or tables that are accessible for logged in user, can be queried with this API for all common needs namely:
+The public tables, or tables that are accessible for the logged in user, can be queried with this API for:
 * Create
 * Read
 * Update
@@ -16,7 +16,7 @@ The Single API seeks to provide a simple unified way to communicate developer in
 
 * `POST` is the single request method needed
 * `/api/crud` is the single route
-* `config`is the single configuration object
+* `config` is the single configuration object
 
 The first two singles are always going to be the same so you, as a developer, only need to worry about the third one.
 
@@ -32,16 +32,16 @@ The string won't be an ordinary string but rather a JSON string, the configurati
 
 //you only need to define this configuration object and everything else stays the same
 let config = {
-	model: 'Picture',
-	type: 'read',
+	model : 'Picture',
+	type : 'read',
 	condition : {} //empty string means you want all pictures
 };
 
 
-$.ajax({url: "/api/crud", //always the same
-		type: 'POST', //always the same
+$.ajax({url : "/api/crud", //always the same
+		type : 'POST', //always the same
 		data : {config: JSON.stringify(config)} //stringify your config
-		success: function(data){console.log(data);}
+		success : function(data){console.log(data);}
 );
 
 ``` 
@@ -58,16 +58,16 @@ As a developer, you only need to worry about supplying the right configuration. 
 
 When type is `read` you can use the following options
 
-* `type`(required): (string) is always `read`
-* `model`(required): (string) is the name of the model ex: `Picture`
-* `conditions`(required) :(object) a key value pair for conditions. Examples are:
+* `type`(required) : (string) is always `read`
+* `model`(required) : (string) is the name of the model ex: `Picture`
+* `conditions`(required) : (object) a key value pair for conditions. Examples are:
 
 ```javascript
 {
-	occupation: /host/,
-	'name.last': 'Ghost',
-	age: { $gt: 17, $lt: 66 },
-	likes: { $in: ['vaporizing', 'talking'] }
+	occupation : /host/,
+	'name.last' : 'Ghost',
+	age: { $gt : 17, $lt: 66 },
+	likes: { $in : ['vaporizing', 'talking'] }
 }
 
 ```
@@ -76,8 +76,8 @@ Example:
 
 ```javascript
 let config = {
-	model: 'Picture',
-	type: 'read',
+	model : 'Picture',
+	type : 'read',
 	condition : {'_id': 1} //will fetch the picture with this condition	
 };
 
@@ -96,9 +96,9 @@ Example:
 
 ```javascript
 let config = {
-	model: 'Picture',
-	type: 'write',
-	idParam '_id',
+	model : 'Picture',
+	type : 'write',
+	idParam : '_id',
 
 	condition : {
 		'_id': 1,
@@ -114,9 +114,9 @@ let config = {
 
 Deletes the entity. Properties are
 
-* `type`(required): (string) is always `write`
-* `model`(required): (string) is the name of the model ex: `Picture`
-* `conditions`(required): (object) in a format {`idParam` : `idValue`} for example: `{'_id' : 555}`
+* `type`(required) : (string) is always `write`
+* `model`(required) : (string) is the name of the model ex: `Picture`
+* `conditions`(required) : (object) in a format {`idParam` : `idValue`} for example: `{'_id' : 555}`
 
 Example:
 
