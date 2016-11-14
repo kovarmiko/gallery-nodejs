@@ -14,6 +14,7 @@ var register = require('./routes/register');
 var pictures = require('./routes/api/pictures');
 var galleries = require('./routes/api/galleries');
 var utils = require('./utils');
+var crud = require('./routes/api/crud');
 
 var app = express();
 
@@ -43,7 +44,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.use('/', routes);
+
+//Make sure all api routes are protected w/ login
 app.use('/api', utils.loginMiddleware);
+//Use "Single API for crud"
+app.use('/api', crud);
 app.use('/api/users', users);
 app.use('/api/pictures', pictures);
 app.use('/api/galleries', galleries);
