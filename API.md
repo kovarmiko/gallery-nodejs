@@ -54,7 +54,7 @@ As a developer, you only need to worry about supplying the right configuration. 
 
 ## Types and properties
 
-### Type `read`:
+### Type `read`
 
 When type is `read` you can use the following options
 
@@ -82,7 +82,7 @@ let config = {
 };
 
 ```
-## Type `write`
+### Type `write`
 
 Type write combines `create` and `update` for the simplicity. Update is only triggered when the configuration object contains the unique identifier usually and `id` or `_id`.
 
@@ -103,14 +103,14 @@ let config = {
 	condition : {
 		'_id': 1,
 		title: 'the new title',
-	    gallery: 'the new gallery,
+	    gallery: 'the new gallery',
 	    //don't include the properties you don't wish to change
 	}
 };
 
 ```
 
-## Type `delete`
+### Type `delete`
 
 Deletes the entity. Properties are
 
